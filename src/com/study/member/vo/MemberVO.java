@@ -15,6 +15,11 @@ public class MemberVO {
 	private int memMileage;       /* 마일리지 */
 	private String memDelete;     /* 탈퇴여부 */
 	
+	
+	// 추가된 필ㄷ,
+	private String memJobNm; /*최원*/
+	private String memLikeNm;/* 회원 취미*/
+	
 	public String getMemId() {
 		return memId;
 	}
@@ -92,5 +97,17 @@ public class MemberVO {
 	}
 	public void setMemDelete(String memDelete) {
 		this.memDelete = memDelete;
+	}
+	public String getMemJobNm() {
+		return memJobNm;
+	}
+	public void setMemJobNm(String memJobNm) {
+		this.memJobNm = memJobNm;
+	}
+	public String getMemLikeNm() {
+		return memLikeNm;
+	}
+	public void setMemLikeNm(String memLikeNm) {
+		this.memLikeNm = memLikeNm;
 	}
 }

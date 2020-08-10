@@ -12,4 +12,5 @@ public interface IMemberDao {
 	public int deleteMember(Connection conn, MemberVO member);
 	public MemberVO getMember(Connection conn, String memId);
 	public List<MemberVO> getMemberList(Connection conn);
+	MemberVO getMemberList(Connection conn, String memId);
 }

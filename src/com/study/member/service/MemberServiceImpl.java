@@ -10,6 +10,7 @@ import com.study.exception.BizDuplicateKeyException;
 import com.study.exception.BizException;
 import com.study.exception.BizNotEffectedException;
 import com.study.exception.BizNotFoundException;
+import com.study.exception.DaoDuplicateKeyException;
 import com.study.exception.DaoException;
 import com.study.member.dao.IMemberDao;
 import com.study.member.dao.MemberDaoOracle;
@@ -21,13 +22,54 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public void registMember(MemberVO member) throws BizDuplicateKeyException {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
+//			MemberVO vo = memberDao.getMember(conn, member.getMemId());
+//			if (vo != null) {
+//				throw new BizDuplicateKeyException("[" + member.getMemId() + "] 이미 존재합니다.");
+//			}
+			try {
+				memberDao.insertMember(conn, member);
+			}catch(DaoDuplicateKeyException e) {
+				throw new BizDuplicateKeyException(e.getMessage(), e);
+			}
+		} catch (SQLException e) {
+			throw new DaoException(e);
+		} finally {
+			// 자원 종료
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+		}
 
 	}
 
 	@Override
 	public void modifyMember(MemberVO member) throws BizNotEffectedException, BizNotFoundException {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
+			MemberVO vo = memberDao.getMember(conn, member.getMemId());
+			if (vo == null) {
+				throw new BizNotFoundException("[" + member.getMemId() + "] 조회 실패");
+			}
+			int cnt = memberDao.updateMember(conn, member);
+			if(cnt < 1) {
+				throw new BizNotEffectedException("[" + member.getMemId() + "] 수정 실패");
+			}
+		} catch (SQLException e) {
+			throw new DaoException("조회시", e);
+		} finally {
+			// 자원 종료
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+		}
 
 	}
 
@@ -39,8 +81,25 @@ public class MemberServiceImpl implements IMemberService {
 
 	@Override
 	public MemberVO getMember(String memId) throws BizNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		try {
+			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
+			MemberVO vo = memberDao.getMember(conn, memId);
+			if (vo == null) {
+				throw new BizNotFoundException("[" + memId + "] 조회 실패");
+			}
+//			System.out.println(vo);
+			return vo;
+		} catch (SQLException e) {
+			throw new DaoException("조회시", e);
+		} finally {
+			// 자원 종료
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+				}
+		}
 	}
 
 	@Override
