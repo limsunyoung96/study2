@@ -21,45 +21,41 @@ public class MemberDaoOracle implements IMemberDao {
 		/* List<MemberVO> list = new ArrayList<MemberVO>(); */
 
 		try {
-			sb.append("INSERT member ");
-			sb.append("	SET mem_pass = ?        ");
-			sb.append("	  , mem_name = ?        ");
-			sb.append("	  , mem_zip = ?        ");
-			sb.append("	  , mem_add1 = ?        ");
-			sb.append("	  , mem_add2 = ?        ");
-			sb.append("	  , mem_bir = ?        ");
-			sb.append("	  , mem_mail = ?        ");
-			sb.append("	  , mem_hp = ?        ");
-			sb.append("	  , mem_job = ?        ");
-			sb.append("	  , mem_job_nm = ?        ");
-			sb.append("	  , mem_like = ?        ");
-			sb.append("	  , mem_like_nm = ?        ");
-			sb.append(" WHERE mem_id =?           ");
-			
-			System.out.println(sb.toString().replace("\\s{2,}", ""));
-			
-			// 바인드 변수 설정
+			sb.append("INSERT INTO member (                           ");
+			sb.append("	      mem_id     , mem_pass   , mem_name      ");
+			sb.append("	    , mem_bir    , mem_zip    , mem_add1      ");
+			sb.append("	    , mem_add2   , mem_hp     , mem_mail      ");
+			sb.append("	    , mem_job    , mem_like   , mem_mileage   ");
+			sb.append("	    , mem_delete                              ");
+			sb.append("	) VALUES (                                    ");
+			sb.append(" ?, ?, ?");
+			sb.append(" ,?, ?, ?");
+			sb.append(" ,?, ?, ?");
+			sb.append(" ,?, ?, 0");
+			sb.append(" ,'N' ");
+			sb.append("	)		                                          ");
+
+			pstmt = conn.prepareStatement(sb.toString());
+			// 구문 실행 전에 파라미터 설정
 			int i = 1;
+			pstmt.setString(i++, member.getMemId());
 			pstmt.setString(i++, member.getMemPass());
 			pstmt.setString(i++, member.getMemName());
+			pstmt.setString(i++, member.getMemBir());
 			pstmt.setString(i++, member.getMemZip());
 			pstmt.setString(i++, member.getMemAdd1());
 			pstmt.setString(i++, member.getMemAdd2());
-			pstmt.setString(i++, member.getMemBir());
-			pstmt.setString(i++, member.getMemMail());
 			pstmt.setString(i++, member.getMemHp());
+			pstmt.setString(i++, member.getMemMail());
 			pstmt.setString(i++, member.getMemJob());
-			pstmt.setString(i++, member.getMemJobNm());
 			pstmt.setString(i++, member.getMemLike());
-			pstmt.setString(i++, member.getMemLikeNm());
 			
-			pstmt = conn.prepareStatement(sb.toString());
 			
 			int cnt = pstmt.executeUpdate();
 			return cnt;
 			
 		} catch (SQLException e) {
-			if(e.getErrorCode()==-1) { //unique 에러일 경우
+			if(e.getErrorCode()==1) { //unique 에러일 경우
 				throw new DaoDuplicateKeyException("등록된 코드 발생 = ["+member.getMemId()+"]");
 			}
 			throw new DaoException(e.getMessage(), e);
@@ -101,6 +97,7 @@ public class MemberDaoOracle implements IMemberDao {
 			
 			System.out.println(sb.toString().replace("\\s{2,}", ""));
 			
+			pstmt = conn.prepareStatement(sb.toString());
 			// 바인드 변수 설정
 			int i = 1;
 			pstmt.setString(i++, member.getMemPass());
@@ -112,11 +109,8 @@ public class MemberDaoOracle implements IMemberDao {
 			pstmt.setString(i++, member.getMemMail());
 			pstmt.setString(i++, member.getMemHp());
 			pstmt.setString(i++, member.getMemJob());
-			pstmt.setString(i++, member.getMemJobNm());
 			pstmt.setString(i++, member.getMemLike());
-			pstmt.setString(i++, member.getMemLikeNm());
-			
-			pstmt = conn.prepareStatement(sb.toString());
+			pstmt.setString(i++, member.getMemId());
 			
 			int cnt = pstmt.executeUpdate();
 			return cnt;

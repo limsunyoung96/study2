@@ -16,7 +16,7 @@ public class MemberVO {
 	private String memDelete;     /* 탈퇴여부 */
 	
 	
-	// 추가된 필ㄷ,
+	// 추가된 필드,
 	private String memJobNm; /*최원*/
 	private String memLikeNm;/* 회원 취미*/
 	

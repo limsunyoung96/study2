@@ -75,7 +75,7 @@
 				<td><input type="email" name="memMail" class="form-control input-sm" required="required" value="${mem.memMail}" ></td>
 			</tr>
 			<tr>
-				<th>헨드폰</th>
+				<th>핸드폰</th>
 				<td><input type="tel" name="memHp" class="form-control input-sm" value="${mem.memHp}"></td>
 			</tr>
 			<tr>
