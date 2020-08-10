@@ -18,7 +18,7 @@
 		<%
 		IMemberService memberService = new MemberServiceImpl();
 		List<MemberVO> members = memberService.getMemberList();
-		request.setAttribute("members", members);
+		request.setAttribute("members", members); /* members란 속성에 members를 대입시키는 것*/
 		%>
 		<%-- <c:set var="members" value = "<%=members %>" scope = "request"> --%>
 		<div>
