@@ -1,0 +1,8 @@
+# read24.txt
+
+--과제
+SOLID 이 방의 끝을 잡고가 아니라
+
+OOP에서 SOLID 원칙을
+-- 5계층
+-- SOLID 원칙
