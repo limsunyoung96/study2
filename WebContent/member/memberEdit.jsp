@@ -93,7 +93,7 @@
 					<select name="memJob" class="form-control input-sm">
 						<option value="">-- 직업 선택 --</option>
 						<c:forEach items="${jobList}" var="code">
-							<option value="${code.commCd}" ${"jobList.commCd" eq mem.memJob ? "selected='selected'": "" } >${code.commNm}</option>
+							<option value="${code.commCd}" ${code.commCd eq mem.memJob ? "selected='selected'": "" } >${code.commNm}</option>
 						</c:forEach>
 							<%-- <option value="JB01" ${"JB01" eq mem.memJob ? "selected='selected'": "" } >주부</option>
 							<option value="JB02" ${"JB02" eq mem.memJob ? "selected='selected'": "" } >은행원</option>
@@ -113,7 +113,7 @@
 					<select name="memLike" class="form-control input-sm">
 						<option value="">-- 취미 선택 --</option>
 						<c:forEach items="${hobbyList}" var="code">
-							<option value="${code.commCd}" ${"${code.commCd}" eq mem.memLike ? "selected='selected'": "" }>${code.commNm}</option>
+							<option value="${code.commCd}" ${code.commCd eq mem.memLike ? "selected='selected'": "" }>${code.commNm}</option>
 						</c:forEach>
 							<%-- <option value="HB01" ${"HB01" eq mem.memLike ? "selected='selected'": "" }>서예</option>
 							<option value="HB02" ${"HB02" eq mem.memLike ? "selected='selected'": "" }>장기</option>

@@ -1,3 +1,6 @@
+<%@page import="com.study.exception.BizDuplicateKeyException"%>
+<%@page import="com.study.member.service.MemberServiceImpl"%>
+<%@page import="com.study.member.service.IMemberService"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.DriverManager"%>
@@ -23,76 +26,23 @@
 		<jsp:setProperty property="*" name="member" />
 		${member}
 		<%
-			// 1. 드라이버 로딩 
-		//Class.forName("oracle.jdbc.driver.OracleDriver");
-		// 변수 선언 
-		Connection conn = null;
-		//Statement stmt = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		// 2. 커넥션 구하기 
-		conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe", "java", "oracle");
-
-		// 3. 구문 객체 생성 
-		// pstmt = conn.prepareStatement(sb.toString());
-
-		StringBuffer sb = new StringBuffer();
-
-		sb.append("INSERT INTO member (                           ");
-		sb.append("	      mem_id     , mem_pass   , mem_name      ");
-		sb.append("	    , mem_bir    , mem_zip    , mem_add1      ");
-		sb.append("	    , mem_add2   , mem_hp     , mem_mail      ");
-		sb.append("	    , mem_job    , mem_like   , mem_mileage   ");
-		sb.append("	    , mem_delete                              ");
-		sb.append("	) VALUES (                                    ");
-		sb.append(" ?, ?, ?");
-		sb.append(" ,?, ?, ?");
-		sb.append(" ,?, ?, ?");
-		sb.append(" ,?, ?, 0");
-		sb.append(" ,'N' ");
-		sb.append("	)		                                          ");
-
-		pstmt = conn.prepareStatement(sb.toString());
-		// 구문 실행 전에 파라미터 설정
-		int i = 1;
-		pstmt.setString(i++, member.getMemId());
-		pstmt.setString(i++, member.getMemPass());
-		pstmt.setString(i++, member.getMemName());
-		pstmt.setString(i++, member.getMemBir());
-		pstmt.setString(i++, member.getMemZip());
-		pstmt.setString(i++, member.getMemAdd1());
-		pstmt.setString(i++, member.getMemAdd2());
-		pstmt.setString(i++, member.getMemHp());
-		pstmt.setString(i++, member.getMemMail());
-		pstmt.setString(i++, member.getMemJob());
-		pstmt.setString(i++, member.getMemLike());
-
-		System.out.println(sb.toString());
-
-		int cnt = pstmt.executeUpdate(); // 수정된 것이 있다면 그 카운트 리턴
-		if (cnt > 0) {
+			IMemberService memberService = new MemberServiceImpl();
+		try{
+			memberService.registMember(member);
 		%>
-		<div class="alert alert-success">정상적으로 회원등록 되었습니다.</div>
+			<div class="alert alert-warning">
+				<h4> 회원이 등록되었습니다. </h4>
+				정상적으로 회원이 가입되었습니다.
+			</div>	
 		<%
-			}
-
-		// 자원 종료 
-		if (rs != null)
-			try {
-				rs.close();
-			} catch (SQLException e) {
-			}
-		if (pstmt != null)
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-			}
-		if (conn != null)
-			try {
-				conn.close();
-			} catch (SQLException e) {
-			}
+		}catch(BizDuplicateKeyException ex){
+		%>
+			<div class="alert alert-warning">
+				<h4> 아이디 중복입니다. </h4>
+				이미 사용중인 아이디 입니다.
+			</div>	
+		<%
+		}
 		%>
 	
 </body>
