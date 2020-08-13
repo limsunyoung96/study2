@@ -10,7 +10,6 @@ import java.util.List;
 import com.study.exception.DaoDuplicateKeyException;
 import com.study.exception.DaoException;
 import com.study.free.vo.FreeBoardVO;
-import com.study.member.vo.MemberVO;
 
 public class FreeBoardDaoOracle implements IFreeBoardDao {
 
@@ -76,19 +75,20 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 
 		try {
 			sb.append("SELECT    bo_no    , bo_title    , bo_category, (select comm_nm FROM comm_code WHERE comm_cd = bo_category) AS bo_category_nm   ");
-			sb.append("        , bo_writer    , bo_pass    , bo_content ");
-		 	sb.append("        , bo_ip    , bo_hit    , to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date     ");
-			sb.append("        , bo_mod_date    , bo_del_yn             ");
-			sb.append("  FROM    free_board                             ");
-			sb.append(" WHERE   bo_no = ?                                                            ");
+			sb.append("        , bo_writer    , bo_pass    , bo_content                                                                                ");
+		 	sb.append("        , bo_ip    , bo_hit    , to_char(bo_reg_date, 'YYYY-MM-DD HH24:MI') as bo_reg_date                                      ");
+			sb.append("        , bo_mod_date    , bo_del_yn                                                                                            ");
+			sb.append("  FROM    free_board                                                                                                            ");
+			sb.append(" WHERE   bo_no = ?                                                                                                              ");
 			
-			System.out.println(sb.toString().replace("\\s{2,}", ""));
+			System.out.println(sb.toString().replaceAll("\\s{2,}", ""));
+			System.out.println("boNo : "+boNo);
 			pstmt = conn.prepareStatement(sb.toString());
 			
 			// 바인드 변수 설정
 			pstmt.setInt(1, boNo);
 			rs = pstmt.executeQuery();
-			FreeBoardVO freeboard = null; // new MemberVO(); 나중에 문제가 되는 코드(주소지가 같아서 한 사람만 목록에 나옴)
+			FreeBoardVO freeboard = null;
 			if (rs.next()) {
 				freeboard = new FreeBoardVO(); // 여기에 new MemberVO를 해야 여러사람이 나옴
 				freeboard.setBoNo(rs.getInt("bo_no"));
@@ -103,7 +103,6 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 				freeboard.setBoRegDate(rs.getString("bo_reg_date"));
 				freeboard.setBoModDate(rs.getString("bo_mod_date"));
 				freeboard.setBoDelYn(rs.getString("bo_del_yn"));
-
 			} // if
 			return freeboard;
 		} catch (SQLException e) {
@@ -174,17 +173,124 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 
 	@Override
 	public int updateBoard(Connection conn, FreeBoardVO board) {
-		return 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			sb.append("UPDATE free_board                 ");
+			sb.append("SET    bo_title = ?               ");
+			sb.append("     , bo_category = ?            ");
+			sb.append("     , bo_writer = ?              ");
+			sb.append("     , bo_content = ?             ");
+			sb.append("     , bo_ip = ?                  ");
+			sb.append("     , bo_hit = ?                 ");
+			sb.append("     , bo_mod_date = sysdate      ");
+			sb.append("WHERE  bo_no = ?                  ");
+			
+			System.out.println(sb.toString().replaceAll("\\s{2,}", ""));
+			
+			pstmt = conn.prepareStatement(sb.toString());
+			// 바인드 변수 설정
+			int i = 1;
+			pstmt.setString(i++, board.getBoTitle());
+			pstmt.setString(i++, board.getBoCategory());
+			pstmt.setString(i++, board.getBoWriter());
+			pstmt.setString(i++, board.getBoContent());
+			pstmt.setString(i++, board.getBoIp());
+			pstmt.setInt(i++, board.getBoHit());
+			pstmt.setInt(i++, board.getBoNo());
+			
+			int cnt = pstmt.executeUpdate();
+			return cnt;
+			
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				} // catch
+		} // funally
 	}
 
 	@Override
 	public int deleteBoard(Connection conn, FreeBoardVO board) {
-		return 0;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			sb.append("DELETE FROM free_board    ");
+			sb.append("WHERE   bo_no = ?         ");
+			
+			System.out.println(sb.toString().replaceAll("\\s{2,}", ""));
+			
+			pstmt = conn.prepareStatement(sb.toString());
+			// 바인드 변수 설정
+			int i = 1;
+			pstmt.setInt(i++, board.getBoNo());
+			
+			int cnt = pstmt.executeUpdate();
+			return cnt;
+			
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				} // catch
+		} // funally
+				
 	}
 
 	@Override
 	public int increaseHit(Connection conn, int boNo) {
-		return 0;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		StringBuffer sb = new StringBuffer();
+		
+		try {
+			sb.append("UPDATE free_board             ");
+			sb.append("SET    bo_hit = bo_hit + 1    ");
+			sb.append("WHERE  bo_no = ?              ");
+			
+			System.out.println(sb.toString().replaceAll("\\s{2,}", ""));
+			pstmt = conn.prepareStatement(sb.toString());
+			// 바인드 변수 설정
+			pstmt.setInt(1, boNo);
+			
+			int cnt = pstmt.executeUpdate();
+			return cnt;
+			
+		} catch (SQLException e) {
+			throw new DaoException(e.getMessage(), e);
+		} finally {
+			if (rs != null)
+				try {
+					rs.close();
+				} catch (SQLException e) {
+				}
+			if (pstmt != null)
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+				} // catch
+		} // funally
 	}
 
 }// class

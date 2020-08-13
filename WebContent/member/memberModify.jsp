@@ -10,7 +10,7 @@
 <html lang="ko">
 <head>
 <%@ include file="/WEB-INF/inc/header.jsp"%>
-<title>memberList.jsp</title>
+<title>memberModify.jsp</title>
 </head>
 <body>
 	<%@ include file="/WEB-INF/inc/top.jsp"%>

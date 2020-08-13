@@ -1,0 +1,56 @@
+# read25.txt , read26.txt
+
+- 오늘 하셔야 할 과제들
+WebContent 에 free 폴더 생성 
+ freeList.jsp 
+ freeForm.jsp 화면 확인 
+------------------------------------------------------------------  
+첫번째 도전 : freeList.jsp 를 위한 서비스, dao 구현
+ - FreeBoardServiceImpl , FreeBoardDaoOracle 구현 
+ - 이를 위해 테이블에 일부 자료를 등록 
+  insert into tb (c1,c2) values (v1, v2) : 1개의 정보 입력 
+  insert into tb (c1,c2) select ....  : 임의 테이블(뷰)에서 조회된 건수만큼 
+  
+  Dao쿼리에서 getBoardList : bo_content 는 제외 ( CLOB ) 
+  
+  freeList.jsp에 
+     분류는 코드가 아니라 분류명 입니다. 
+     등록일 YYYY-MM-DD 또는 YYYY.MM.DD  
+-------------------------------------------------------- 
+두번째 도전 : freeForm.jsp, freeRegist.jsp 완성 
+  freeRegist.jsp 에서 사용자의 IP 를 해당 vo에 담야야 합니다.
+    board.setBoIp(?????);
+    boardService.registBoard(board);
+  
+  dao의 insert 문에서 
+    boNo는 시퀀스 값, 등록일은 오늘날짜, 조회수 0, 삭제여부 'N'
+    수정일은 구문에 없음   
+    그 외는 사용자가 입력한 값으로
+    
+  서비스의 registBoard에서 현재 BizDuplicateKeyException 은 제거 (거의 발생 안함)
+  Dao 의 DaoDuplicateKeyException 은 있어야 합니다.        
+-------------------------------------------------------------------  
+세번째 도전 : freeView.jsp 
+	 날짜 형식 :  YYYY-MM-DD HH24:MI  
+	 freeView.jsp 의 코딩영역에서 
+	 if (board != null)
+	    freeBoardService.increaseHit(??)	
+	
+-------------------------------------------------------------------  
+네번번째 도전 : freeModify.jsp , freeDelete.jsp 
+	수정시 IP는 알아서 처리 
+	DAO 에서 수정일 오늘날짜로 
+	   
+	freeBoardService.modifyBoard(FreeBoardVO board)  
+	   FreeBoardVO vo = boardDao.getBoard(board.getBoNo());
+	   if vo == null throw  BizNotFoundException
+	   if vo.boPass != board.boPass throw  BizPasswordNotMatchedException
+	   int cnt = boardDao.updateBoard(board)
+	   if cnt < 1  throw BizNotEffectedException;
+	   
+	   
+
+
+
+
+  

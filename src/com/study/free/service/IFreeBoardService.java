@@ -2,7 +2,6 @@ package com.study.free.service;
 
 import java.util.List;
 
-import com.study.exception.BizDuplicateKeyException;
 import com.study.exception.BizNotEffectedException;
 import com.study.exception.BizNotFoundException;
 import com.study.exception.BizPasswordNotMatchedException;

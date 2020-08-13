@@ -3,7 +3,6 @@ package com.study.free.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.study.exception.DaoException;
 /*import com.study.free.vo.FreeBoardSearchVO;*/
 import com.study.free.vo.FreeBoardVO;
 

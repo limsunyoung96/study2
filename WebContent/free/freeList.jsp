@@ -38,7 +38,7 @@
 		<col width="15%" />
 		<col width="10%" />
 	</colgroup>
-	<thead class="text-center">
+	<thead>
 		<tr >
 			<th>글번호</th>
 			<th>분류명</th>

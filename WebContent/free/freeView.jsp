@@ -16,10 +16,13 @@
 <%
 	IFreeBoardService freeBoardService = new FreeBoardServiceImpl();
 
-	String boardNo = request.getParameter("boNo");
-	FreeBoardVO boardVo = freeBoardService.getBoard(Integer.parseInt(boardNo));
+	int boNo = Integer.parseInt(request.getParameter("boNo"));
+	FreeBoardVO boardVo = freeBoardService.getBoard(boNo);
 	request.setAttribute("boardVo", boardVo);
-	System.out.println(boardVo);
+	/* System.out.println(boardVo); */
+	if(boardVo != null){
+		freeBoardService.increaseHit(boNo);
+	}
 %>
 	<div class="page-header">
 		<h3>자유게시판 - <small>상세보기</small></h3>

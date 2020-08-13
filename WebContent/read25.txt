@@ -11,6 +11,8 @@ WebContent에 free 폴더 생성
 		X insert into tb (c1, c2) values (v1, v2) : 1개의 정보 입력 X
 		[ insert into tb (c1, c2) select ...      : 임의 테이블(뷰)에서 조회된 건수 만큼 ]->>>이거 쓸거임
 		
+	  Dao쿼리에서 getBoardList : bo_content 는 제외 ( CLOB ) 
+		
 	*주의 점
 		freelist.jsp 에 분류는 코드가 아니라 분류명
 		등록일 YYYY-MM-DD 형식
@@ -31,5 +33,20 @@ WebContent에 free 폴더 생성
 	
 ------------------------------------------------------------------------------------------
 세번째 도전 : freeView.jsp 
-		
+	날짜 형식 : YYYY-MM-DD HH24:MI
+	freeView.jsp 의 코딩영역에서
+	if(board != null)
+		freeBoardService.increaseHit(??)
+	
+------------------------------------------------------------------------------------------
+네번째 도전: freeModify.jsp, freeDelete.jsp
+	수정시 IP는 알아서 처리
+	DAO에서 수정일 오늘 날짜로
+	
+	freeBoardService.modifyBoard(FreeBoardVO board)
+		FreeBoardVO vo = boardDao.getBoard(board.getBoNo());
+		if vo == null throw BizNotFoundException
+		if vo.boPass != board.boPass throw BizPasswordNotMatchedException
+		int cnt = boardDao.updateBoard(board)
+		if cnt < 1 throw BizNotEffectedException
 		
