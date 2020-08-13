@@ -46,9 +46,16 @@ public class FreeBoardVO implements Serializable {
 	public String getBoCategory() {
 		return boCategory;
 	}
+	public String getBoCategoryNm() {
+		return boCategoryNm;
+	}
 
 	public void setBoCategory(String boCategory) {
 		this.boCategory = boCategory;
+	}
+	
+	public void setBoCategoryNm(String boCategoryNm) {
+		this.boCategoryNm = boCategoryNm;
 	}
 
 	public String getBoWriter() {

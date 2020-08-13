@@ -38,8 +38,8 @@
 		<col width="15%" />
 		<col width="10%" />
 	</colgroup>
-	<thead>
-		<tr>
+	<thead class="text-center">
+		<tr >
 			<th>글번호</th>
 			<th>분류명</th>
 			<th>제목</th>
@@ -52,9 +52,9 @@
 	<c:forEach var="vo" items="${boards}">
 		<tr class="text-center">
 			<td>${vo.boNo}</td>
-			<td>${vo.boCategory}</td>
+			<td>${vo.boCategoryNm}</td>
 			<td class="text-left">
-				<a href="freeView.jsp?boNo=2">
+				<a href="freeView.jsp?boNo=${vo.boNo}">
 					${vo.boTitle}
 				</a>
 			</td>

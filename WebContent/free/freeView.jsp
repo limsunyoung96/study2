@@ -46,7 +46,7 @@
 				</tr>
 				<tr>
 					<th>글분류</th>
-					<td>${boardVo.boCategory}</td>
+					<td>${boardVo.boCategoryNm}</td>
 				</tr>
 				<tr>
 					<th>작성자명</th>
@@ -83,7 +83,7 @@
 							</a>
 						</div>
 						<div class="pull-right">
-							<a href="freeEdit.jsp?boNo=17" class="btn btn-success btn-sm"> 
+							<a href="freeEdit.jsp?boNo=${boardVo.boNo}" class="btn btn-success btn-sm"> 
 								<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
 								&nbsp;&nbsp;수정
 						  </a>

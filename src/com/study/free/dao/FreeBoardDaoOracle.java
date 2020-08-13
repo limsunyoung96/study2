@@ -22,7 +22,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 		List<FreeBoardVO> list = new ArrayList<FreeBoardVO>();
 
 		try {
-			sb.append("SELECT    to_char(bo_no) as bo_no    , bo_title    , bo_category   ");
+			sb.append("SELECT    to_char(bo_no) as bo_no    , bo_title    , bo_category, (select comm_nm FROM comm_code WHERE comm_cd = bo_category) AS bo_category_nm   ");
 			sb.append("        , bo_writer    , bo_pass    , bo_content ");
 		 	sb.append("        , bo_ip    , to_char(bo_hit) as bo_hit    , to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date     ");
 			sb.append("        , bo_mod_date    , bo_del_yn             ");
@@ -38,6 +38,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 				freeboard.setBoNo(rs.getInt("bo_no"));
 				freeboard.setBoTitle(rs.getString("bo_title"));
 				freeboard.setBoCategory(rs.getString("bo_category"));
+				freeboard.setBoCategoryNm(rs.getString("bo_category_nm"));
 				freeboard.setBoWriter(rs.getString("bo_writer"));
 				freeboard.setBoPass(rs.getString("bo_pass"));
 				freeboard.setBoContent(rs.getString("bo_content"));
@@ -74,7 +75,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 		/* List<MemberVO> list = new ArrayList<MemberVO>(); */
 
 		try {
-			sb.append("SELECT    bo_no    , bo_title    , bo_category   ");
+			sb.append("SELECT    bo_no    , bo_title    , bo_category, (select comm_nm FROM comm_code WHERE comm_cd = bo_category) AS bo_category_nm   ");
 			sb.append("        , bo_writer    , bo_pass    , bo_content ");
 		 	sb.append("        , bo_ip    , bo_hit    , to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date     ");
 			sb.append("        , bo_mod_date    , bo_del_yn             ");
@@ -93,6 +94,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 				freeboard.setBoNo(rs.getInt("bo_no"));
 				freeboard.setBoTitle(rs.getString("bo_title"));
 				freeboard.setBoCategory(rs.getString("bo_category"));
+				freeboard.setBoCategoryNm(rs.getString("bo_category_nm"));
 				freeboard.setBoWriter(rs.getString("bo_writer"));
 				freeboard.setBoPass(rs.getString("bo_pass"));
 				freeboard.setBoContent(rs.getString("bo_content"));
