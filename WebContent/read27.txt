@@ -1,0 +1,29 @@
+# read27.txt
+
+디버거 사용
+------------------------
+어플리케이션에서 문제가 발생했을 때
+ - 개발중: 로그 남기기
+ 
+ - 운영중: 로그 남기기
+ 
+ 로그 남기기
+ 
+  System.out.println(): 좋은 방법은 아니죠, 단순하게 처리하는 경우
+  						    콘솔에 로그가 사라지죠
+  운영중일때는 log처리하는 라이브러리로 작성
+  Commons logging ( java에 대표적인 로그 프록시 객체, 대행자 )
+  					   실제 로그 구현체 Log4j, LogBack, JDK logger, ...
+  					   
+  					   
+ 구글 이클립스 디버거 사용법
+ 
+ DBMS별 페이징 쿼리
+ mysql : select 구문의 마지막 절에 LIMIT 절
+ 	limit 0: 첫 로우
+ 	limit 0, 10 : 첫로우부터 10개
+ 	limit 10, 10 : 11로우부터 10개
+ 
+ Oracle : rownum
+	 표준 윈도우함수 지원 DBMS : Oracle 9i+, sqlserver 2005+, db2....
+	 row_number() over() 

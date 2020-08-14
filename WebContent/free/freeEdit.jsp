@@ -114,12 +114,14 @@
                 &nbsp;&nbsp;목록
               </a>
             </div>
+            
             <div class="pull-right">
               <!-- 문제점 : 사용자가 입력박스에서 엔터를 치면 첫번째 submit의 formaction 방향으로 이동한다.  -->
               <button type="submit"  formaction="freeDelete.jsp" class="btn btn-sm btn-danger"> 
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 &nbsp;&nbsp;삭제
               </button>
+              
               <button type="submit" class="btn btn-sm btn-primary" > 
                 <span class="glyphicon glyphicon-save" aria-hidden="true"></span>
                 &nbsp;&nbsp;저장

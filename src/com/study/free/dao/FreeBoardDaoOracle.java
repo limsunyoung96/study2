@@ -26,6 +26,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 		 	sb.append("        , bo_ip    , to_char(bo_hit) as bo_hit    , to_char(bo_reg_date, 'YYYY-MM-DD') as bo_reg_date     ");
 			sb.append("        , bo_mod_date    , bo_del_yn             ");
 			sb.append("  FROM    free_board                             ");
+			sb.append("ORDER BY   to_number(bo_no) desc                  ");
 			
 
 			pstmt = conn.prepareStatement(sb.toString());
@@ -33,7 +34,7 @@ public class FreeBoardDaoOracle implements IFreeBoardDao {
 			FreeBoardVO freeboard = null;
 			
 			while (rs.next()) {
-				freeboard = new FreeBoardVO(); // 여기에 new MemberVO를 해야 여러사람이 나옴
+				freeboard = new FreeBoardVO();// 여기에 new MemberVO를 해야 여러사람이 나옴
 				freeboard.setBoNo(rs.getInt("bo_no"));
 				freeboard.setBoTitle(rs.getString("bo_title"));
 				freeboard.setBoCategory(rs.getString("bo_category"));
