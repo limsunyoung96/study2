@@ -1,4 +1,4 @@
-<%@page import="com.study.member.service.FreeBoardServiceImpl"%>
+<%@page import="com.study.free.service.FreeBoardServiceImpl"%>
 <%@page import="com.study.free.service.IFreeBoardService"%>
 <%@page import="java.sql.SQLException"%>
 <%@page import="java.sql.DriverManager"%>

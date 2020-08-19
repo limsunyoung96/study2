@@ -27,3 +27,36 @@
  Oracle : rownum
 	 표준 윈도우함수 지원 DBMS : Oracle 9i+, sqlserver 2005+, db2....
 	 row_number() over() 
+	 
+	 select *
+  from ( select rownum rnum , a.* 
+          from (select bo_no, bo_title  
+                  from free_board
+                 order by bo_no desc 
+               ) a
+         where rownum <= 10
+       ) b 
+where rnum between 1 and 10;   
+ 
+ 표준 윈도우함수 지원 DBMS : oracle 9i +  , sqlserver 2005+  , db2.....    
+   row_number() over ()
+select * 
+  from ( select row_number() over (order by bo_no desc) rnum
+               , bo_no, bo_title
+           from free_board
+       ) 
+ where rnum between 1 and 10;     
+ 
+ 
+ 과제: freeList에서 하셨던 검색
+ com.study.member.vo.MemberSearchVO -> PagingVO
+  - searchJob, searchLike, 
+  - searchType : IM, ID, HP, ADDR(회원명, 아이디, 핸드폰, 주소)
+  - searchWord
+  
+ 각 Dao, Service 의 인터페이스 변경 필요(Dao에 getMemberCount 추가)
+ 
+ 내일의 과제: 회원 목록을 자유게시판에서 하셨던 것처럼 페이징 처리
+   
+     
+  

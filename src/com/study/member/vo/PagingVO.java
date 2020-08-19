@@ -1,4 +1,4 @@
-package com.study.common.vo;
+package com.study.member.vo;
 
 import java.io.Serializable;
 

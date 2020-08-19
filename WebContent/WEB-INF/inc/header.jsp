@@ -12,6 +12,9 @@
 
     <!-- 부트스트랩 css-->
     <link href="<%=request.getContextPath()%>/bootstrap-3.3.2/css/bootstrap.css" rel="stylesheet">
+        <!-- 폰트어 css-->
+    <link href="<%=request.getContextPath()%>/fontawesome-free-5.14.0-web/css/all.css" rel="stylesheet">
+    
     
    <!-- jQuery  -->
    <script src="<%=request.getContextPath()%>/js/jquery1.11.2.min.js"></script>

@@ -1,7 +1,7 @@
 <%@page import="com.study.exception.BizPasswordNotMatchedException"%>
 <%@page import="com.study.exception.BizNotFoundException"%>
 <%@page import="com.study.exception.BizNotEffectedException"%>
-<%@page import="com.study.member.service.FreeBoardServiceImpl"%>
+<%@page import="com.study.free.service.FreeBoardServiceImpl"%>
 <%@page import="com.study.free.service.IFreeBoardService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>

@@ -14,6 +14,7 @@ import com.study.exception.DaoDuplicateKeyException;
 import com.study.exception.DaoException;
 import com.study.member.dao.IMemberDao;
 import com.study.member.dao.MemberDaoOracle;
+import com.study.member.vo.MemberSearchVO;
 import com.study.member.vo.MemberVO;
 
 public class MemberServiceImpl implements IMemberService {
@@ -103,11 +104,15 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public List<MemberVO> getMemberList() {
+	public List<MemberVO> getMemberList(MemberSearchVO searchVO) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
-			List<MemberVO> list = memberDao.getMemberList(conn);
+			// 건수를 구해서 searchVO 설정 -> searchVO.pageSetting() -> list 호출 
+			int cnt = memberDao.getBoardCount(conn, searchVO);
+			searchVO.setTotalRowCount(cnt);
+			searchVO.pageSetting();
+			List<MemberVO> list = memberDao.getMemberList(conn, searchVO);
 			return list;
 		} catch (SQLException e) {
 			throw new DaoException("조회시", e);

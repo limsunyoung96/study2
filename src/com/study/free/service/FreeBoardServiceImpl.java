@@ -1,4 +1,4 @@
-package com.study.member.service;
+package com.study.free.service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import com.study.exception.BizPasswordNotMatchedException;
 import com.study.exception.DaoException;
 import com.study.free.dao.FreeBoardDaoOracle;
 import com.study.free.dao.IFreeBoardDao;
-import com.study.free.service.IFreeBoardService;
+import com.study.free.vo.FreeBoardSearchVO;
 import com.study.free.vo.FreeBoardVO;
 
 public class FreeBoardServiceImpl implements IFreeBoardService  {
@@ -19,21 +19,20 @@ public class FreeBoardServiceImpl implements IFreeBoardService  {
 	private IFreeBoardDao freeBoardDao = new FreeBoardDaoOracle();
 	
 	@Override
-	public List<FreeBoardVO> getBoardList() {
+	public List<FreeBoardVO> getBoardList(FreeBoardSearchVO searchVO) {
 		Connection conn = null;
 		try {
 			conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:study");
-			List<FreeBoardVO> list = freeBoardDao.getBoardList(conn);
+			// 건수를 구해서 searchVO 설정 -> searchVO.pageSetting() -> list 호출 
+			int cnt = freeBoardDao.getBoardCount(conn, searchVO);
+			searchVO.setTotalRowCount(cnt);
+			searchVO.pageSetting();			
+			List<FreeBoardVO> list = freeBoardDao.getBoardList(conn, searchVO);
 			return list;
 		} catch (SQLException e) {
-			throw new DaoException("조회시", e);
+			throw new DaoException(e.getMessage(), e);
 		} finally {
-			// 자원 종료
-			if (conn != null)
-				try {
-					conn.close();
-				} catch (SQLException e) {
-				}
+			if (conn != null)try {conn.close();	} catch (SQLException e) {}
 		}
 	}
 
