@@ -1,0 +1,36 @@
+# Study3 준비 
+
+1. Dynamic Web Project생성  : study3 , 서블릿 3.1  
+
+2. study2 에서 가져 올 것
+      css, js , bootstrap, images, fontawsome 그대로 복사  
+      WEB-INF/ 하위 inc, err, lib안의 라이브러리
+      free, member 그대로 복사 
+
+---------------------------------
+# Study3 에서는 
+ 전형적 어플리케이션 5계층 구조 다시 음미하기   
+ - Controller Layer :
+ - Business/Logic Layer : 
+ - Persistence Layer : 
+ - Presentation Layer :  
+ - Domain Layer :
+
+교재(18장)의 컨트롤러 구현 실습 
+StudyDispatcherController 구현 (제공된 MVC 문서 작업)
+
+디자인 패턴 종류   
+GoF 디자인 패턴
+
+정규표현식 : 몇번을 하는 거야 (DB, 스크립트 에서도 했는데)
+
+페이징쿼리 : 동일한 쿼리를 계속 복사/붙이기 해야하나?
+
+교재(16장) 커스텀 태그 : 반복적인 UI 작업을 어떻게 하나  
+   
+교재(19장) 필터 : 구현은 쉽고 , 기능은 막강
+
+MyBatis 적용 : JDBC 작업에서 쿼리를 쉽게 처리하고 싶어요 
+
+ 
+   
